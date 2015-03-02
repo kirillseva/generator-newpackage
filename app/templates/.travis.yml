@@ -16,15 +16,6 @@ notifications:
   email:
     on_success: change
     on_failure: change
-  hipchat:
-    rooms:
-      secure: fEz6PnKZw03WaGCo9Ivqx743IaZWHARKrb6jbi1Q68oh/KY8xSLsgZpO7ooj3bRK0C+GIWZtAWBJ1BDjx0UKARRaWNkTDP5kLXrsOaGyiZPvtb2nQR5yqk/vy1c0wuA49O0qMGw9q6kEG7/jC5Hi+27oN1fDKPZyqhgnEh8WoHA=
-    on_success: change
-    on_failure: change
-    template:
-    - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message}
-      | Details: %{build_url} | Changes: %{compare_url}"
-
 env:
   - global:
     - WARNINGS_ARE_ERRORS=1

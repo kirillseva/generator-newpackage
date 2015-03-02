@@ -2,9 +2,13 @@
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
+var path = require('path');
 
 module.exports = yeoman.generators.Base.extend({
-  initializing: function () {
+  init: function () {
+    this.argument('name', { type: String, required: false });
+    this.appname = this.name || path.basename(process.cwd());
+    this.appname = this._.camelize(this._.slugify(this._.humanize(this.appname)));
     this.pkg = require('../package.json');
   },
 
@@ -13,18 +17,17 @@ module.exports = yeoman.generators.Base.extend({
 
     // Have Yeoman greet the user.
     this.log(yosay(
-      'Welcome to the well-made' + chalk.red('Newpackage') + ' generator!'
+      'I\'m sure this package will be better than your previous one! Keep trying!'
     ));
 
     var prompts = [{
-      type: 'confirm',
-      name: 'someOption',
-      message: 'Would you like to enable this option?',
-      default: true
-    }];
+        name: 'packageName',
+        message: 'What will the name of your package be?',
+        default: this.name ? this.name : "RRRRrrrrrRR"
+      }];
 
     this.prompt(prompts, function (props) {
-      this.someOption = props.someOption;
+      this.packageName = props.packageName;
 
       done();
     }.bind(this));
@@ -32,31 +35,28 @@ module.exports = yeoman.generators.Base.extend({
 
   writing: {
     app: function () {
-      this.fs.copy(
-        this.templatePath('_package.json'),
-        this.destinationPath('package.json')
-      );
-      this.fs.copy(
-        this.templatePath('_bower.json'),
-        this.destinationPath('bower.json')
-      );
     },
 
     projectfiles: function () {
-      this.fs.copy(
-        this.templatePath('editorconfig'),
-        this.destinationPath('.editorconfig')
-      );
-      this.fs.copy(
-        this.templatePath('jshintrc'),
-        this.destinationPath('.jshintrc')
-      );
-    }
-  },
+      var asIs = [
+        'NEWS.md',
+        'NAMESPACE',
+        '.travis.yml'
+        ],
+        yoman = this;
 
-  install: function () {
-    this.installDependencies({
-      skipInstall: this.options['skip-install']
-    });
+      this.fs.copyTpl(
+        this.templatePath('README.md'),
+        this.destinationPath('README.md'),
+        {title: this.packageName}
+      );
+
+      this._.each(asIs, function(filename){
+        yoman.fs.copy(
+          yoman.templatePath(filename),
+          yoman.destinationPath(filename)
+        );
+      });
+    }
   }
 });
