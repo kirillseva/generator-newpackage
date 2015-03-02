@@ -1,7 +1,7 @@
 {
   "name": "generator-newpackage",
-  "version": "0.0.0",
-  "description": "Yeoman generator",
+  "version": "0.0.1",
+  "description": "Yeoman generator for a new R package",
   "license": "MIT",
   "main": "app/index.js",
   "repository": "kirillseva/generator-newpackage",
