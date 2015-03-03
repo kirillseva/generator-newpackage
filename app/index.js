@@ -33,7 +33,7 @@ module.exports = yeoman.generators.Base.extend({
       {
         name: 'packageName',
         message: 'What will the name of your package be?',
-        default: this.name ? this.name : "RRRRrrrrrRR"
+        default: this.appname
       },
       {
         name: 'authorName',
