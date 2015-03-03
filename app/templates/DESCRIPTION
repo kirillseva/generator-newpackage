@@ -1,6 +1,6 @@
 Package: <%= packageName %>
 Type: Package
-Title: <%= packageName %> (http://github.com/<%=author%>/<%= packageName %>)
+Title: <%= packageName %> (http://github.com/<%=authorGithub%>/<%= packageName %>)
 Description: Describe the package.
 Version: 0.1.0
 Author: <%= authorName %> <%= authorLastName %> <<%= authorEmail %>>

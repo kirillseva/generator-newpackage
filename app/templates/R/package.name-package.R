@@ -1,6 +1,6 @@
 #' Describe the package.
 #'
-#' @name package.name
+#' @name <%= packageName %>
 #' @import stringr
 #' @docType package
 NULL
