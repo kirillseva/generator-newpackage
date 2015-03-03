@@ -3,6 +3,8 @@ var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
 var path = require('path');
+var ini = require('ini');
+var fs = require('fs');
 
 module.exports = yeoman.generators.Base.extend({
   init: function () {
@@ -10,6 +12,16 @@ module.exports = yeoman.generators.Base.extend({
     this.appname = this.name || path.basename(process.cwd());
     this.appname = this._.camelize(this._.slugify(this._.humanize(this.appname)));
     this.pkg = require('../package.json');
+  },
+
+  getAuthorDefaults: function () {
+    var done = this.async();
+    var getUserHome = function () {
+      return process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE;
+    }
+    var gitconfig = ini.parse(fs.readFileSync(getUserHome() + '/.gitconfig'));
+    this.log(gitconfig.user.name);
+    done();
   },
 
   prompting: function () {
@@ -20,11 +32,18 @@ module.exports = yeoman.generators.Base.extend({
       'I\'m sure this package will be better than your previous one! Keep trying!'
     ));
 
-    var prompts = [{
+    var prompts = [
+      {
         name: 'packageName',
         message: 'What will the name of your package be?',
         default: this.name ? this.name : "RRRRrrrrrRR"
-      }];
+      },
+      {
+        name: 'authorName',
+        message: 'What is your first name?',
+        default: this.name ? this.name : "RRRRrrrrrRR"
+      }
+      ];
 
     this.prompt(prompts, function (props) {
       this.packageName = props.packageName;
