@@ -36,7 +36,7 @@ Requires the following to be installed:
 [**testthat**](https://github.com/hadley/testthat) R packages (not required, but would make your life easier)
 
 Installation on mac:
-```sh
+```
 # install dependencies
 brew install npm # apt-get install npm on ubuntu
 npm install -g yo generator-newpackage
