@@ -39,7 +39,7 @@ Installation on mac:
 ```
 # install dependencies
 brew install npm # apt-get install npm on ubuntu
-npm install -g yo generator-newpackage
+sudo npm install -g yo generator-newpackage
 
 # start using
 cd package/directory
