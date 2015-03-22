@@ -8,6 +8,7 @@ var ini = require('iniparser');
 module.exports = yeoman.generators.Base.extend({
   init: function () {
     this.argument('name', { type: String, required: false });
+    this.makedir = this.name === undefined ? false : true; // mkdir if name supplied
     this.appname = this.name || path.basename(process.cwd());
     this.appname = this._.camelize(this._.slugify(this._.humanize(this.appname)));
     this.pkg = require('../package.json');
@@ -26,7 +27,9 @@ module.exports = yeoman.generators.Base.extend({
 
     // Have Yeoman greet the user.
     this.log(yosay(
-      'Hello ' + this.username + '! I\'m sure this package will be better than your previous one. Keep trying!'
+      'Hello ' + chalk.yellow(this.username) +
+      '! I\'m sure this package will be better than your previous one.' +
+      ' Keep trying!'
     ));
 
     var prompts = [
@@ -69,7 +72,13 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   writing: {
-    app: function () {
+    makedir: function () {
+      if (this.makedir) {
+        this.mkdir(this.packageName);
+        this.pathPrefix = this.packageName + '/';
+      } else {
+        this.pathPrefix = '';
+      }
     },
 
     projectfiles: function () {
@@ -84,31 +93,31 @@ module.exports = yeoman.generators.Base.extend({
 
       this.fs.copyTpl(
         this.templatePath('README.md'),
-        this.destinationPath('README.md'),
+        this.destinationPath(this.pathPrefix + 'README.md'),
         {packageName: this.packageName}
       );
 
       this.fs.copyTpl(
         this.templatePath('R/package.name-package.R'),
-        this.destinationPath('R/'+this.packageName+'-package.R'),
+        this.destinationPath(this.pathPrefix + 'R/'+this.packageName+'-package.R'),
         {packageName: this.packageName}
       );
 
       this.fs.copyTpl(
         this.templatePath('man/package.name.Rd'),
-        this.destinationPath('man/'+this.packageName+'.Rd'),
+        this.destinationPath(this.pathPrefix + 'man/'+this.packageName+'.Rd'),
         {packageName: this.packageName}
       );
 
       this.fs.copyTpl(
         this.templatePath('tests/test-all.R'),
-        this.destinationPath('tests/test-all.R'),
+        this.destinationPath(this.pathPrefix + 'tests/test-all.R'),
         {packageName: this.packageName}
       );
 
       this.fs.copyTpl(
         this.templatePath('DESCRIPTION'),
-        this.destinationPath('DESCRIPTION'),
+        this.destinationPath(this.pathPrefix + 'DESCRIPTION'),
         {
           packageName: this.packageName,
           authorName: this.authorName,
@@ -118,10 +127,10 @@ module.exports = yeoman.generators.Base.extend({
         }
       );
 
-      this._.each(asIs, function(filename){
+      this._.each(asIs, function (filename) {
         yoman.fs.copy(
           yoman.templatePath(filename),
-          yoman.destinationPath(filename)
+          yoman.destinationPath(yoman.pathPrefix + filename)
         );
       });
     }
