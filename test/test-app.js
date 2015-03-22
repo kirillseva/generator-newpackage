@@ -9,19 +9,17 @@ describe('newpackage:app', function () {
   before(function (done) {
     helpers.run(path.join(__dirname, '../app'))
       .inDir(path.join(os.tmpdir(), './temp-test'))
-      .withOptions({ 'skip-install': true })
-      .withPrompt({
-        someOption: true
-      })
+      .withPrompt({ 'packageName': 'testing' })
       .on('end', done);
   });
 
-  it('creates files', function () {
+  it('creates files and interpolates names correctly', function () {
     assert.file([
-      'bower.json',
-      'package.json',
-      '.editorconfig',
-      '.jshintrc'
+      'DESCRIPTION',
+      'NAMESPACE',
+      'README.md',
+      '.travis.yml',
+      'R/testing-package.R'
     ]);
   });
 });
