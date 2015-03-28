@@ -14,10 +14,11 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha tests"
   },
   "files": [
-    "app"
+    "app",
+    "test"
   ],
   "keywords": [
     "yeoman-generator",
