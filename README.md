@@ -36,14 +36,18 @@ Requires the following to be installed:
 [**testthat**](https://github.com/hadley/testthat) R packages (not required, but would make your life easier)
 
 Installation on mac:
-```
+```r
 # install dependencies
-brew install npm # apt-get install npm on ubuntu
+brew install npm # sudo apt-get install npm on ubuntu
 sudo npm install -g yo generator-newpackage
 
 # start using
 cd package/directory
-yo newpackage
+yo newpackage # creates a package in the current folder
 # or
-yo newpackage packageName
+yo newpackage packageName # creates a new folder
+
+# subgenerators
+yo newpackage:function somefunction # creates R/somefunction.R
+yo newpackage:test sometest # creates tests/testthat/sometest.R
 ```
