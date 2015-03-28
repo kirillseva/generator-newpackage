@@ -1,0 +1,6 @@
+#' <%= functionName %>
+#'
+#' @export
+<%= functionName %> <- function(...) {
+
+}

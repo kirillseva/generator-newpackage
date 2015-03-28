@@ -4,16 +4,16 @@ var path = require('path');
 var assert = require('yeoman-generator').assert;
 var helpers = require('yeoman-generator').test;
 
-describe('newpackage:test', function () {
+describe('newpackage:function', function () {
   before(function (done) {
-    helpers.run(path.join(__dirname, '../test'))
-      .withArguments(['sometest'])
+    helpers.run(path.join(__dirname, '../function'))
+      .withArguments(['somefunction'])
       .on('end', done);
   });
 
-  it('creates the test file', function () {
+  it('creates the function file', function () {
     assert.file([
-      'tests/testthat/test-sometest.R'
+      'R/somefunction.R'
     ]);
   });
 });
